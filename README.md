@@ -31,12 +31,15 @@ This repository contains the **source code** for my personal website, hosted at 
    cd website_src
 
 2. **Install Dependencies**
+   ```bash
    npm install
 
 3. **Run Locally**
+   ```bash
    npm start
 
 4. **Build for Production**
+   ```bash
    npm run build
 
 ## Contributing
@@ -62,6 +65,6 @@ They may not be reused without explicit permission. See [LICENSE](LICENSE) for d
 ## Contact
 
 - [GitHub](https://github.com/rahulbs98)
-- [Email](mailto:your-email@example.com)
+- [Email](mailto:rahs@itu.dk)
 
 
