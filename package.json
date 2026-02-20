@@ -1,0 +1,28 @@
+{
+  "name": "website_src",
+  "version": "1.0.0",
+  "description": "This repository contains the **source code** for my personal website, hosted at [rahulbs98.github.io](https://rahulbs98.github.io) and mirrored to [rahulbs.me](https://rahulbs.me). The website is academic-focused, showcases my photography, and links to my blog posts (Medium/Substack).",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --port=3000 --open=./",
+    "build": "echo 'Add your production build steps here later'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahulbs98/website_src.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rahulbs98/website_src/issues"
+  },
+  "homepage": "https://github.com/rahulbs98/website_src#readme",
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  },
+  "dependencies": {
+    "bibtex-parse-js": "^0.0.23"
+  }
+}
