@@ -33,6 +33,7 @@
   --spacing-md: 1.25rem;
   --spacing-lg: 1.75rem;
   --spacing-xl: 2.5rem;
+  --spacing-xxl: 3.5rem;
 
   /* Border Radius - small & subtle */
   --radius-sm: 8px;
@@ -205,16 +206,98 @@ main h1 {
 }
 
 .content-wrapper {
-  max-width: 900px;
+  max-width: 1000px;
+  margin: var(--spacing-lg) auto;
+  padding: 0 var(--spacing-sm);
+  line-height: 1.7;
+  color: var(--color-text-primary);
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+}
+
+/* ===============================
+   About Page (Minimal)
+   =============================== */
+.content-wrapper-about {
+  max-width: 750px;
   margin: var(--spacing-lg) auto;
   padding: 0 var(--spacing-sm);
   line-height: 1.7;
   color: var(--color-text-primary);
 }
 
-/* ===============================
-   About Section
-   =============================== */
+.about-header {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.about-header h1 {
+  font-size: var(--font-size-xxl);
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.about-header p {
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  line-height: 1.8;
+}
+
+.about-section-card {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.about-section-card h2 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Education */
+.education-list {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+.education-item {
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+}
+
+.education-item strong {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.education-detail {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* Research Grid */
+.research-grid {
+  display: none;
+}
+
+.research-item {
+  display: none;
+}
+
+.research-title {
+  display: none;
+}
+
+/* Work List */
+.work-list {
+  display: none;
+}
+
 .about-section {
   max-width: 900px;
   margin: var(--spacing-lg) auto;
@@ -642,21 +725,22 @@ footer p {
    =============================== */
 .hero {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
-  gap: var(--spacing-xl);
-  margin-bottom: var(--spacing-lg);
-  padding: 0 var(--spacing-lg);
+  gap: var(--spacing-lg);
+  margin-bottom: 0;
+  padding: 0;
+  text-align: center;
 }
 
 .hero-text {
-  flex: 1 1 400px;
+  flex: 0 0 auto;
 }
 
 .hero-text h1 {
   font-size: var(--font-size-xxl);
   margin-bottom: var(--spacing-xs);
-  text-align: left;
+  text-align: center;
   color: var(--color-text-primary);
   font-weight: 700;
 }
@@ -684,6 +768,23 @@ footer p {
   opacity: 0.8;
 }
 
+.hero-contact {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.hero-contact p {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
+}
+
+.hero-contact a {
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
 .hero-buttons {
   display: none;
 }
@@ -706,7 +807,7 @@ footer p {
 }
 
 .hero-image {
-  flex: 1 1 260px;
+  flex: 0 0 auto;
   text-align: center;
 }
 
@@ -730,11 +831,12 @@ footer p {
    Home About Section
    =============================== */
 .home-about {
-  margin: var(--spacing-xl) 0;
+  margin: 0;
   padding: var(--spacing-xl) var(--spacing-lg);
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background: transparent;
+  grid-column: 2;
 }
 
 .home-about-content {
@@ -985,6 +1087,12 @@ footer p {
     padding: var(--spacing-md) var(--spacing-xs);
   }
 
+  .content-wrapper {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    align-items: start;
+  }
+
   .hero {
     flex-direction: column;
     text-align: center;
@@ -1003,6 +1111,14 @@ footer p {
 
   .hero-image img {
     max-width: 90%;
+  }
+
+  .home-about {
+    grid-column: 1;
+  }
+
+  .research-grid {
+    display: none;
   }
 
   .pub-list,
