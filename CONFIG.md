@@ -43,10 +43,14 @@ To change colors, edit the CSS variables in `assets/css/style.css`:
 
 ```css
 :root {
-  --color-accent: #0ea5e9;          /* Main accent color */
-  --color-accent-secondary: #06b6d4; /* Secondary accent */
-  --color-accent-tertiary: #a78bfa;   /* Tertiary (purples, gradients) */
+  --color-accent: #9CA3AF;          /* Dark theme accent */
+  --color-accent-secondary: #6B7280;
   /* ... other variables ... */
+}
+
+[data-theme="light"] {
+  --color-accent: #2563EB;          /* Light theme link accent */
+  --color-accent-secondary: #1D4ED8;
 }
 ```
 
@@ -69,15 +73,15 @@ const SOCIAL_LINKS = [
 
 ## Publications from BibTeX
 
-Publications automatically load from `assets/data/publications.json` which is generated from `publications.bib`.
+Publications automatically load from `assets/data/publications.json` which is generated from DBLP BibTeX.
 
 To update publications:
 
 ```bash
-node convertBib.js
+npm run pubs
 ```
 
-This will regenerate the JSON file from your BibTeX entries.
+This will fetch your latest BibTeX from DBLP, update `publications.bib`, and regenerate the JSON file.
 
 ---
 
@@ -85,13 +89,14 @@ This will regenerate the JSON file from your BibTeX entries.
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Homepage with hero section |
-| `about.html` | About page |
-| `blog.html` | Blog (Substack RSS integration) |
-| `publications.html` | Research publications |
+| `index.html` | Homepage |
+| `about.html` | Bio page |
+| `blog.html` | Blog (Substack integration) |
+| `publications.html` | Research page |
+| `links.html` | Interesting links |
 | `albums/index.html` | Photo gallery |
-| `assets/css/style.css` | All styling (theme colors, layouts) |
+| `assets/css/style.css` | Styling (theme colors, layouts) |
 | `assets/js/components.js` | Theme toggle, social links, footer |
-| `publications.bib` | BibTeX bibliography file |
-| `convertBib.js` | Script to convert BibTeX to JSON |
+| `publications.bib` | DBLP-fetched BibTeX file |
+| `convertBib.js` | Fetches DBLP BibTeX + generates JSON |
 

@@ -7,9 +7,10 @@ This repository contains the **source code** for my personal website, hosted at 
 ## Features
 
 - Academic portfolio and CV
-- Blog section linking to Medium/Substack with banners
-- Photography albums for tourism and artistic work
-- Interactive and artistic design
+- Blog section via Substack
+- Research publications loaded from DBLP BibTeX
+- Photography albums
+- Dark/light theme toggle
 - Fully responsive and privacy-conscious
 
 ---
@@ -29,18 +30,35 @@ This repository contains the **source code** for my personal website, hosted at 
    ```bash
    git clone https://github.com/rahulbs98/website_src.git
    cd website_src
+   ```
 
 2. **Install Dependencies**
    ```bash
    npm install
+   ```
 
 3. **Run Locally**
    ```bash
    npm start
+   ```
 
 4. **Build for Production**
    ```bash
    npm run build
+   ```
+
+5. **Regenerate Publications (optional)**
+   ```bash
+   npm run pubs
+   ```
+
+## Deployment (GitHub Pages)
+
+1. Push your changes to the `main` branch.
+2. In GitHub, go to **Settings → Pages**.
+3. Under **Build and deployment**, select **Deploy from a branch**.
+4. Choose `main` and the `/ (root)` folder, then save.
+5. Your site will be available at `https://rahulbs98.github.io`.
 
 ## Contributing
 
