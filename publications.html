@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Publications - Rahul Satish</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/components.js" defer></script>
 </head>
 <body>
   <header>
@@ -18,19 +19,137 @@
   </header>
 
   <main>
-    <h1>My Publications</h1>
-
-    <!-- Optional filters -->
+    <h1>Research Publications</h1>
+    
     <div class="pub-filters">
-      <button onclick="filterYear()">All</button>
-      <!-- You can add buttons dynamically -->
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="conference">Conferences</button>
+      <button class="filter-btn" data-filter="journal">Journals</button>
+      <button class="filter-btn" data-filter="eprint">eprints</button>
+      <button class="filter-btn" data-filter="ongoing">Ongoing Work</button>
     </div>
 
     <div id="publication-list" class="pub-list">
-      <!-- JS will populate this -->
+      <!-- Publications will be loaded here dynamically -->
+    </div>
+    
+    <div id="pub-placeholder" class="empty-state" style="display:none;">
+      <p>No publications available yet in this category.</p>
     </div>
   </main>
 
-  <script src="assets/js/publications.js"></script>
+  <script>
+    // Sample publications data - Replace with your actual data
+    const publications = [
+      {
+        id: 1,
+        title: "Efficient Secure Multiparty Computation from Garbled Circuits",
+        authors: "Rahul Satish, Prof. Carmit Hazay",
+        year: 2023,
+        type: "conference",
+        venue: "CRYPTO 2023",
+        abstract: "We present improved techniques for secure MPC using garbled circuits...",
+        links: { 
+          pdf: "#",
+          eprint: "https://eprint.iacr.org/",
+          doi: "https://doi.org/"
+        },
+        tags: ["MPC", "Cryptography", "Garbled Circuits"]
+      },
+      {
+        id: 2,
+        title: "Privacy-Preserving Machine Learning",
+        authors: "Rahul Satish, Team PSE",
+        year: 2024,
+        type: "journal",
+        venue: "Journal of Cryptology",
+        abstract: "We develop practical privacy-preserving techniques for ML...",
+        links: { 
+          pdf: "#",
+          doi: "https://doi.org/"
+        },
+        tags: ["Privacy", "ML", "Cryptography"]
+      },
+      {
+        id: 3,
+        title: "Zero Knowledge Proofs for Blockchain",
+        authors: "Rahul Satish",
+        year: 2024,
+        type: "eprint",
+        venue: "IACR ePrint",
+        abstract: "A comprehensive study of ZK proofs in blockchain systems...",
+        links: { 
+          eprint: "https://eprint.iacr.org/"
+        },
+        tags: ["ZK Proofs", "Blockchain"]
+      },
+      {
+        id: 4,
+        title: "Post-Quantum Cryptography Implementations",
+        authors: "Rahul Satish, et al.",
+        year: 2024,
+        type: "ongoing",
+        venue: "In Submission",
+        abstract: "Practical implementations of post-quantum secure schemes...",
+        links: {},
+        tags: ["Post-Quantum", "Implementation"]
+      }
+    ];
+
+    // Filter publications on load
+    function initPublications() {
+      renderPublications(publications);
+      setupFilterButtons();
+    }
+
+    function renderPublications(pubs) {
+      const container = document.getElementById('publication-list');
+      const placeholder = document.getElementById('pub-placeholder');
+      
+      if (pubs.length === 0) {
+        container.style.display = 'none';
+        placeholder.style.display = 'block';
+        return;
+      }
+      
+      container.style.display = 'grid';
+      placeholder.style.display = 'none';
+      
+      container.innerHTML = pubs.map(pub => `
+        <div class="pub-card">
+          <div class="pub-type">${pub.type}</div>
+          <h3>${pub.title}</h3>
+          <p class="pub-authors">${pub.authors}</p>
+          <p class="pub-meta"><strong>${pub.venue}</strong> · ${pub.year}</p>
+          <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--spacing-md);">${pub.abstract}</p>
+          <div class="pub-tags">
+            ${pub.tags.map(tag => `<span class="pub-tag">${tag}</span>`).join('')}
+          </div>
+          <div style="display: flex; gap: var(--spacing-sm); margin-top: auto;">
+            ${pub.links.pdf ? `<a href="${pub.links.pdf}">PDF</a>` : ''}
+            ${pub.links.eprint ? `<a href="${pub.links.eprint}">eprint</a>` : ''}
+            ${pub.links.doi ? `<a href="${pub.links.doi}">DOI</a>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setupFilterButtons() {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          const filter = btn.getAttribute('data-filter');
+          const filtered = filter === 'all' ? publications : publications.filter(p => p.type === filter);
+          renderPublications(filtered);
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initPublications);
+  </script>
+
 </body>
 </html>

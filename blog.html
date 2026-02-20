@@ -3,51 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rahul's Blogs</title>
+  <title>Blog - Rahul Satish</title>
   <link rel="stylesheet" href="assets/css/style.css">
-  <style>
-    /* Optional quick styles if not in style.css yet */
-    .blog-banners {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      padding: 20px 0;
-    }
-    .blog-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      text-decoration: none;
-      color: inherit;
-      width: 220px;
-      border-radius: 8px;
-      overflow: hidden;
-      transition: transform 0.2s;
-    }
-    .blog-card:hover {
-      transform: scale(1.05);
-    }
-    .blog-card img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-    }
-    .blog-card h3 {
-      font-size: 1rem;
-      margin: 10px 0;
-    }
-    .placeholder {
-      text-align: center;
-      font-style: italic;
-      color: #666;
-      margin-top: 40px;
-    }
-  </style>
+  <script src="assets/js/components.js" defer></script>
 </head>
 <body>
-  <!-- Header / Navigation -->
   <header>
     <nav>
       <a href="index.html" class="logo">Rahul Satish</a>
@@ -59,25 +19,76 @@
   </header>
 
   <main>
-    <h1>My Blog Posts</h1>
-    <div class="blog-banners" id="blog-banners">
-      <!-- JS will inject blog cards here -->
-    </div>
-    <div id="blog-placeholder" class="placeholder" style="display:none;">
-      No blog posts available yet. Check back soon!
+    <h1>Latest Articles</h1>
+    <p style="font-size: 1.1rem; color: var(--color-text-secondary); margin-bottom: var(--spacing-xl);">
+      Thoughts on cryptography, privacy, security, and technology.
+    </p>
+
+    <div id="blog-container" class="blog-grid">
+      <!-- Blog cards will be populated here -->
     </div>
   </main>
 
-  <script src="assets/js/blog.js"></script>
   <script>
-    // Show placeholder if no blog cards injected
-    document.addEventListener("DOMContentLoaded", () => {
-      const banners = document.getElementById("blog-banners");
-      const placeholder = document.getElementById("blog-placeholder");
-      if (!banners.hasChildNodes()) {
-        placeholder.style.display = "block";
+    // Sample blog data structure
+    const blogPosts = [
+      {
+        id: 1,
+        title: "Understanding Garbled Circuits",
+        date: "December 2024",
+        category: "Cryptography",
+        description: "A deep dive into garbled circuits - how they work, why they're important for secure computation, and practical considerations for implementation.",
+        image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800&q=80",
+        url: "https://medium.com/your-blog"
+      },
+      {
+        id: 2,
+        title: "Privacy Preserving ML in 2024",
+        date: "November 2024",
+        category: "Privacy",
+        description: "Exploring the latest techniques in privacy-preserving machine learning, from differential privacy to federated learning approaches.",
+        image: "https://images.unsplash.com/photo-1677442d019cecf74167c46a3646ce573b887bad?w=800&q=80",
+        url: "https://medium.com/your-blog"
+      },
+      {
+        id: 3,
+        title: "The Future of Zero Knowledge",
+        date: "October 2024",
+        category: "Research",
+        description: "Analyzing the evolution of ZK proof systems and what the next generation of zero knowledge technology might look like.",
+        image: "https://images.unsplash.com/photo-1526374965328-7f5ae4e8cfb6?w=800&q=80",
+        url: "https://medium.com/your-blog"
+      },
+      {
+        id: 4,
+        title: "Blockchain Security Considerations",
+        date: "September 2024",
+        category: "Blockchain",
+        description: "Key security considerations when designing blockchain systems, from consensus mechanisms to smart contract safety.",
+        image: "https://images.unsplash.com/photo-1639762681033-6461854d8c73?w=800&q=80",
+        url: "https://medium.com/your-blog"
       }
-    });
+    ];
+
+    function renderBlogPosts() {
+      const container = document.getElementById('blog-container');
+      
+      container.innerHTML = blogPosts.map(post => `
+        <article class="blog-card">
+          ${post.image ? `<div class="blog-image" style="background-image: url('${post.image}')"></div>` : ''}
+          <div class="blog-content">
+            <span class="blog-category">${post.category}</span>
+            <h2>${post.title}</h2>
+            <p class="blog-date">${post.date}</p>
+            <p class="blog-description">${post.description}</p>
+            <a href="${post.url}" target="_blank" class="read-more">Read on Medium →</a>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderBlogPosts);
   </script>
+
 </body>
 </html>

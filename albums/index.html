@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Albums - Rahul Satish</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <script src="../assets/js/components.js" defer></script>
+  <style>
+    .albums-header {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .albums-header p {
+      font-size: 1.1rem;
+      color: var(--color-text-secondary);
+    }
+
+    .albums-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      padding: var(--spacing-md);
+      background-color: var(--color-bg-lighter);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border);
+    }
+
+    .filter-btn {
+      padding: var(--spacing-sm) var(--spacing-md);
+      background-color: transparent;
+      border: 2px solid var(--color-border);
+      color: var(--color-text-primary);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--color-accent);
+      background-color: rgba(0, 212, 255, 0.05);
+    }
+
+    .filter-btn.active {
+      background-color: rgba(0, 212, 255, 0.1);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+      box-shadow: 0 0 15px rgba(0, 212, 255, 0.25);
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .photo-card {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--color-border);
+      transition: var(--transition);
+      background-color: var(--color-bg-lighter);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .photo-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--spacing-lg);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .photo-card:hover .photo-overlay {
+      opacity: 1;
+    }
+
+    .photo-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .photo-meta {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .photo-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-xs);
+    }
+
+    .photo-tag {
+      display: inline-block;
+      background-color: rgba(0, 212, 255, 0.2);
+      color: var(--color-accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid rgba(0, 212, 255, 0.4);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: var(--spacing-xl);
+      color: var(--color-text-secondary);
+    }
+
+    .empty-state p {
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="../index.html" class="logo">Rahul Satish</a>
+      <a href="../about.html">About</a>
+      <a href="../publications.html">Publications</a>
+      <a href="../blog.html">Blog</a>
+      <a href="./index.html">Albums</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="albums-header">
+      <h1>Photo Albums</h1>
+      <p>A collection of moments captured around the world - travel, architecture, and everyday life.</p>
+    </div>
+
+    <div class="albums-filters">
+      <button class="filter-btn active" data-filter="all">All Photos</button>
+      <button class="filter-btn" data-filter="travel">Travel</button>
+      <button class="filter-btn" data-filter="architecture">Architecture</button>
+      <button class="filter-btn" data-filter="nature">Nature</button>
+      <button class="filter-btn" data-filter="street">Street</button>
+      <button class="filter-btn" data-filter="portrait">Portrait</button>
+    </div>
+
+    <div id="photo-grid" class="photo-grid">
+      <!-- Photos will be loaded here -->
+    </div>
+
+    <div id="empty-state" class="empty-state" style="display:none;">
+      <p>No photos available in this category yet.</p>
+    </div>
+  </main>
+
+  <script>
+    // Sample photo albums data
+    const photoAlbums = [
+      {
+        id: 1,
+        title: "Mountain Vista",
+        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+        tags: ["nature", "travel"],
+        location: "Swiss Alps",
+        date: "August 2024",
+        camera: "Canon EOS R5"
+      },
+      {
+        id: 2,
+        title: "Urban Geometry",
+        image: "https://images.unsplash.com/photo-1479749971702-3926f33d3a6e?w=600&q=80",
+        tags: ["architecture", "street"],
+        location: "Berlin, Germany",
+        date: "July 2024",
+        camera: "Sony A7IV"
+      },
+      {
+        id: 3,
+        title: "Sunset at the Coast",
+        image: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&q=80",
+        tags: ["nature", "travel"],
+        location: "Amalfi Coast, Italy",
+        date: "June 2024",
+        camera: "Canon EOS R5"
+      },
+      {
+        id: 4,
+        title: "Modern Architecture",
+        image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80",
+        tags: ["architecture"],
+        location: "Tokyo, Japan",
+        date: "May 2024",
+        camera: "Fujifilm X-T5"
+      },
+      {
+        id: 5,
+        title: "Street Life",
+        image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=600&q=80",
+        tags: ["street", "travel"],
+        location: "Barcelona, Spain",
+        date: "April 2024",
+        camera: "Sony A7IV"
+      },
+      {
+        id: 6,
+        title: "Nature Walk",
+        image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
+        tags: ["nature"],
+        location: "Black Forest, Germany",
+        date: "September 2024",
+        camera: "Canon EOS R5"
+      },
+      {
+        id: 7,
+        title: "City Lights",
+        image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&q=80",
+        tags: ["street", "architecture"],
+        location: "Singapore",
+        date: "March 2024",
+        camera: "Sony A7IV"
+      },
+      {
+        id: 8,
+        title: "Forest Path",
+        image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
+        tags: ["nature", "travel"],
+        location: "Switzerland",
+        date: "October 2024",
+        camera: "Fujifilm X-T5"
+      }
+    ];
+
+    function renderPhotos(photos) {
+      const grid = document.getElementById('photo-grid');
+      const emptyState = document.getElementById('empty-state');
+
+      if (photos.length === 0) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
+
+      grid.style.display = 'grid';
+      emptyState.style.display = 'none';
+
+      grid.innerHTML = photos.map(photo => `
+        <div class="photo-card" data-tags="${photo.tags.join(' ')}">
+          <img src="${photo.image}" alt="${photo.title}" loading="lazy">
+          <div class="photo-overlay">
+            <div class="photo-title">${photo.title}</div>
+            <div class="photo-meta">📍 ${photo.location} · ${photo.date}</div>
+            <div class="photo-tags">
+              ${photo.tags.map(tag => `<span class="photo-tag">${tag}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setupFilters() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update active state
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Filter photos
+          const filter = btn.getAttribute('data-filter');
+          let filtered = photoAlbums;
+
+          if (filter !== 'all') {
+            filtered = photoAlbums.filter(photo => photo.tags.includes(filter));
+          }
+
+          renderPhotos(filtered);
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderPhotos(photoAlbums);
+      setupFilters();
+    });
+  </script>
+
+</body>
+</html>
