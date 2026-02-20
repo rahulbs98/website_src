@@ -118,7 +118,8 @@ header {
   top: 0;
   z-index: 100;
   border-bottom: 1px solid var(--color-border);
-  background-color: transparent;
+  background-color: var(--color-bg);
+  backdrop-filter: blur(8px);
   transition: var(--transition);
 }
 
@@ -245,6 +246,21 @@ main h1 {
   line-height: 1.8;
 }
 
+.bio-subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.bio-content p {
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--color-text-primary);
+}
+
+.bio-content p:last-child {
+  margin-bottom: 0;
+}
+
 .about-section-card {
   margin-bottom: var(--spacing-xxl);
 }
@@ -258,44 +274,50 @@ main h1 {
   letter-spacing: 0.5px;
 }
 
-/* Education */
-.education-list {
-  display: grid;
-  gap: var(--spacing-lg);
-}
-
-.education-item {
-  font-size: 0.95rem;
+/* About Lists */
+.about-list {
+  margin: 0;
+  padding-left: 1.1rem;
   color: var(--color-text-primary);
+  display: grid;
+  gap: var(--spacing-sm);
 }
 
-.education-item strong {
+.about-list strong {
   font-weight: 600;
   color: var(--color-text-primary);
 }
 
-.education-detail {
-  font-size: 0.85rem;
+/* Links Page */
+.links-section {
+  margin-bottom: var(--spacing-xxl);
+}
+
+.links-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.links-list a {
+  color: var(--color-text-primary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 2px;
+  transition: var(--transition);
+}
+
+.links-list a:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.links-note {
   color: var(--color-text-secondary);
-  margin-top: var(--spacing-xs);
-}
-
-/* Research Grid */
-.research-grid {
-  display: none;
-}
-
-.research-item {
-  display: none;
-}
-
-.research-title {
-  display: none;
-}
-
-/* Work List */
-.work-list {
-  display: none;
+  font-size: 0.9rem;
+  margin-top: var(--spacing-md);
 }
 
 .about-section {
@@ -503,13 +525,48 @@ footer .social-links a:hover {
 /* ===============================
    Publications (Revamped)
    =============================== */
+.research-page h1 {
+  text-align: left;
+  max-width: 1000px;
+  margin: 0 auto var(--spacing-lg);
+}
+
+.research-interests {
+  max-width: 1000px;
+  margin: 0 auto var(--spacing-lg);
+  text-align: left;
+}
+
+.research-interests h2 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+}
+
+.research-interests p {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.research-publications {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.research-publications h2 {
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-sm);
+  color: var(--color-text-primary);
+}
 .pub-filters {
   display: flex;
   gap: var(--spacing-sm);
   flex-wrap: wrap;
-  justify-content: center;
-  margin: var(--spacing-lg) 0;
-  padding: var(--spacing-lg) var(--spacing-md);
+  justify-content: flex-start;
+  margin: var(--spacing-md) 0 var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-sm);
+  width: fit-content;
+  max-width: 100%;
   background-color: var(--color-bg-lighter);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);

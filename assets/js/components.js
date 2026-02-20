@@ -26,10 +26,10 @@ const ICONS = {
  * Social Links Configuration
  */
 const SOCIAL_LINKS = [
-  { icon: 'github', url: 'https://github.com/rahulbs98', label: 'GitHub' },
-  { icon: 'linkedin', url: 'https://www.linkedin.com/in/rahulbs98', label: 'LinkedIn' },
-  { icon: 'email', url: 'mailto:rahs@itu.dk', label: 'Email' },
-  { icon: 'signal', url: 'https://signal.org', label: 'Signal' },
+  { icon: 'github', url: 'https://github.com/rahulbs98', label: 'GitHub', relMe: true },
+  { icon: 'linkedin', url: 'https://www.linkedin.com/in/rahulbs98', label: 'LinkedIn', relMe: true },
+  { icon: 'email', url: 'mailto:rahs@itu.dk', label: 'Email', relMe: true },
+  { icon: 'signal', url: 'https://signal.org', label: 'Signal', relMe: true },
   { icon: 'scholar', url: 'https://scholar.google.com/citations?user=YOUR_ID', label: 'Google Scholar' },
   { icon: 'dblp', url: 'https://dblp.org/pid/XX/XXX.html', label: 'DBLP' },
 ];
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 function generateSocialLinks() {
   return SOCIAL_LINKS.map(link => 
-    `<a href="${link.url}" target="_blank" rel="noopener noreferrer" aria-label="${link.label}">
+    `<a href="${link.url}" target="_blank" rel="${link.relMe ? 'me ' : ''}noopener noreferrer" aria-label="${link.label}">
       ${ICONS[link.icon]}
     </a>`
   ).join('');

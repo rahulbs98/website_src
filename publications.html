@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Publications - Rahul Satish</title>
+  <title>Research - Rahul Satish</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <script src="assets/js/components.js" defer></script>
 </head>
@@ -11,32 +11,41 @@
   <header>
     <nav>
       <a href="index.html" class="logo">Rahul Satish</a>
-      <a href="about.html">About</a>
-      <a href="publications.html">Publications</a>
+      <a href="about.html">Bio</a>
+      <a href="publications.html">Research</a>
       <a href="blog.html">Blog</a>
+      <a href="links.html">Links</a>
       <a href="albums/" target="_blank">Albums</a>
       <a href="assets/data/cv.pdf" target="_blank">CV</a>
       <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
     </nav>
   </header>
 
-  <main>
-    <h1>Research Publications</h1>
-    
-    <div class="pub-filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="conference">Conferences</button>
-      <button class="filter-btn" data-filter="journal">Journals</button>
-      <button class="filter-btn" data-filter="eprint">eprints</button>
-    </div>
+  <main class="research-page">
+    <h1>Research</h1>
 
-    <div id="publication-list" class="pub-list">
-      <!-- Publications will be loaded here dynamically -->
-    </div>
-    
-    <div id="pub-placeholder" class="empty-state" style="display:none;">
-      <p>Loading publications...</p>
-    </div>
+    <section class="research-interests">
+      <h2>Interests</h2>
+      <p>Secure Multiparty Computation, Zero Knowledge Proofs, Privacy Enhancing Technologies</p>
+    </section>
+
+    <section class="research-publications">
+      <h2>Publications</h2>
+      <div class="pub-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="conference">Conferences</button>
+        <button class="filter-btn" data-filter="journal">Journals</button>
+        <button class="filter-btn" data-filter="eprint">eprints</button>
+      </div>
+
+      <div id="publication-list" class="pub-list">
+        <!-- Publications will be loaded here dynamically -->
+      </div>
+      
+      <div id="pub-placeholder" class="empty-state" style="display:none;">
+        <p>Loading publications...</p>
+      </div>
+    </section>
   </main>
 
   <script>
