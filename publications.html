@@ -15,6 +15,8 @@
       <a href="publications.html">Publications</a>
       <a href="blog.html">Blog</a>
       <a href="albums/" target="_blank">Albums</a>
+      <a href="assets/data/cv.pdf" target="_blank">CV</a>
+      <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
     </nav>
   </header>
 
@@ -26,7 +28,6 @@
       <button class="filter-btn" data-filter="conference">Conferences</button>
       <button class="filter-btn" data-filter="journal">Journals</button>
       <button class="filter-btn" data-filter="eprint">eprints</button>
-      <button class="filter-btn" data-filter="ongoing">Ongoing Work</button>
     </div>
 
     <div id="publication-list" class="pub-list">
@@ -34,121 +35,146 @@
     </div>
     
     <div id="pub-placeholder" class="empty-state" style="display:none;">
-      <p>No publications available yet in this category.</p>
+      <p>Loading publications...</p>
     </div>
   </main>
 
   <script>
-    // Sample publications data - Replace with your actual data
-    const publications = [
-      {
-        id: 1,
-        title: "Efficient Secure Multiparty Computation from Garbled Circuits",
-        authors: "Rahul Satish, Prof. Carmit Hazay",
-        year: 2023,
-        type: "conference",
-        venue: "CRYPTO 2023",
-        abstract: "We present improved techniques for secure MPC using garbled circuits...",
-        links: { 
-          pdf: "#",
-          eprint: "https://eprint.iacr.org/",
-          doi: "https://doi.org/"
-        },
-        tags: ["MPC", "Cryptography", "Garbled Circuits"]
-      },
-      {
-        id: 2,
-        title: "Privacy-Preserving Machine Learning",
-        authors: "Rahul Satish, Team PSE",
-        year: 2024,
-        type: "journal",
-        venue: "Journal of Cryptology",
-        abstract: "We develop practical privacy-preserving techniques for ML...",
-        links: { 
-          pdf: "#",
-          doi: "https://doi.org/"
-        },
-        tags: ["Privacy", "ML", "Cryptography"]
-      },
-      {
-        id: 3,
-        title: "Zero Knowledge Proofs for Blockchain",
-        authors: "Rahul Satish",
-        year: 2024,
-        type: "eprint",
-        venue: "IACR ePrint",
-        abstract: "A comprehensive study of ZK proofs in blockchain systems...",
-        links: { 
-          eprint: "https://eprint.iacr.org/"
-        },
-        tags: ["ZK Proofs", "Blockchain"]
-      },
-      {
-        id: 4,
-        title: "Post-Quantum Cryptography Implementations",
-        authors: "Rahul Satish, et al.",
-        year: 2024,
-        type: "ongoing",
-        venue: "In Submission",
-        abstract: "Practical implementations of post-quantum secure schemes...",
-        links: {},
-        tags: ["Post-Quantum", "Implementation"]
+    /**
+     * Publications Manager - Loads from BibTeX JSON
+     */
+    class PublicationsManager {
+      constructor() {
+        this.allPubs = [];
+        this.filteredPubs = [];
       }
-    ];
 
-    // Filter publications on load
-    function initPublications() {
-      renderPublications(publications);
-      setupFilterButtons();
-    }
-
-    function renderPublications(pubs) {
-      const container = document.getElementById('publication-list');
-      const placeholder = document.getElementById('pub-placeholder');
-      
-      if (pubs.length === 0) {
-        container.style.display = 'none';
-        placeholder.style.display = 'block';
-        return;
+      async loadPublications() {
+        try {
+          const response = await fetch('assets/data/publications.json');
+          const data = await response.json();
+          this.allPubs = this.processBibTeXData(data);
+          this.filteredPubs = this.allPubs;
+          this.render();
+          this.setupFilters();
+        } catch (error) {
+          console.error('Error loading publications:', error);
+          document.getElementById('pub-placeholder').style.display = 'block';
+          document.getElementById('pub-placeholder').textContent = 'Error loading publications.';
+        }
       }
-      
-      container.style.display = 'grid';
-      placeholder.style.display = 'none';
-      
-      container.innerHTML = pubs.map(pub => `
-        <div class="pub-card">
-          <div class="pub-type">${pub.type}</div>
-          <h3>${pub.title}</h3>
-          <p class="pub-authors">${pub.authors}</p>
-          <p class="pub-meta"><strong>${pub.venue}</strong> · ${pub.year}</p>
-          <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--spacing-md);">${pub.abstract}</p>
-          <div class="pub-tags">
-            ${pub.tags.map(tag => `<span class="pub-tag">${tag}</span>`).join('')}
-          </div>
-          <div style="display: flex; gap: var(--spacing-sm); margin-top: auto;">
-            ${pub.links.pdf ? `<a href="${pub.links.pdf}">PDF</a>` : ''}
-            ${pub.links.eprint ? `<a href="${pub.links.eprint}">eprint</a>` : ''}
-            ${pub.links.doi ? `<a href="${pub.links.doi}">DOI</a>` : ''}
-          </div>
-        </div>
-      `).join('');
-    }
 
-    function setupFilterButtons() {
-      const buttons = document.querySelectorAll('.filter-btn');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          buttons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          
-          const filter = btn.getAttribute('data-filter');
-          const filtered = filter === 'all' ? publications : publications.filter(p => p.type === filter);
-          renderPublications(filtered);
+      processBibTeXData(bibTeXArray) {
+        return bibTeXArray.map(entry => {
+          const tags = entry.entryTags;
+          const journalStr = (tags.journal || '').toLowerCase();
+          const entryType = (entry.entryType || '').toLowerCase();
+
+          // Determine publication type based on journal/type name
+          let pubType = 'eprint';
+          if (journalStr.includes('eprint') || journalStr.includes('iacr')) {
+            pubType = 'eprint';
+          } else if (journalStr.includes('conference') || entryType === 'inproceedings') {
+            pubType = 'conference';
+          } else if (entryType === 'article' || journalStr.includes('journal')) {
+            pubType = 'journal';
+          }
+
+          return {
+            id: entry.citationKey,
+            title: this.cleanText(tags.title || ''),
+            authors: this.formatAuthors(tags.author || ''),
+            year: tags.year || '',
+            type: pubType,
+            venue: this.cleanText(tags.journal || tags.booktitle || 'Unknown Venue'),
+            url: tags.url || '',
+            pages: tags.pages || '',
+            abstract: tags.abstract || 'No abstract available',
+            tags: this.extractTags(tags.title, tags.keywords)
+          };
+        }).sort((a, b) => parseInt(b.year) - parseInt(a.year));
+      }
+
+      cleanText(text) {
+        if (!text) return '';
+        return text
+          .replace(/{|}/g, '')
+          .replace(/\\"/g, '"')
+          .replace(/\\'/g, "'")
+          .trim();
+      }
+
+      formatAuthors(authorStr) {
+        if (!authorStr) return 'Unknown Authors';
+        return authorStr
+          .split(' and ')
+          .map(author => author.trim())
+          .join(', ');
+      }
+
+      extractTags(title, keywords) {
+        if (!title) return [];
+        const titleWords = title.toLowerCase().split(' ');
+        const cryptoTerms = ['mpc', 'zkproof', 'garbling', 'cryptography', 
+                            'privacy', 'secure', 'blockchain', 'abe'];
+        return titleWords.filter(word => 
+          cryptoTerms.some(term => word.includes(term))
+        ).slice(0, 3);
+      }
+
+      filter(type) {
+        if (type === 'all') {
+          this.filteredPubs = this.allPubs;
+        } else {
+          this.filteredPubs = this.allPubs.filter(pub => pub.type === type);
+        }
+        this.render();
+      }
+
+      render() {
+        const container = document.getElementById('publication-list');
+        const placeholder = document.getElementById('pub-placeholder');
+
+        if (this.filteredPubs.length === 0) {
+          container.style.display = 'none';
+          placeholder.style.display = 'block';
+          placeholder.textContent = 'No publications in this category.';
+          return;
+        }
+
+        container.style.display = 'flex';
+        placeholder.style.display = 'none';
+
+        container.innerHTML = this.filteredPubs.map(pub => `
+          <div class="pub-card">
+            <p class="pub-meta">${pub.year}</p>
+            <div>
+              <h3>${pub.title}</h3>
+              <p class="pub-authors">${pub.authors} · <em>${pub.venue}</em></p>
+            </div>
+            ${pub.url ? `<a href="${pub.url}" target="_blank">View →</a>` : ''}
+          </div>
+        `).join('');
+      }
+
+      setupFilters() {
+        const buttons = document.querySelectorAll('.filter-btn');
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.getAttribute('data-filter');
+            this.filter(filter);
+          });
         });
-      });
+      }
     }
 
-    document.addEventListener('DOMContentLoaded', initPublications);
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const pubManager = new PublicationsManager();
+      pubManager.loadPublications();
+    });
   </script>
 
 </body>

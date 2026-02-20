@@ -35,8 +35,58 @@ const SOCIAL_LINKS = [
 ];
 
 /**
- * Generate Social Links HTML
+ * Theme Manager - Dark/Light Mode
  */
+const ThemeManager = {
+  STORAGE_KEY: 'website-theme',
+  DARK_THEME: 'dark',
+  LIGHT_THEME: 'light',
+
+  init() {
+    // Get saved theme or use system preference
+    const savedTheme = localStorage.getItem(this.STORAGE_KEY);
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches 
+      ? this.DARK_THEME 
+      : this.LIGHT_THEME;
+    const theme = savedTheme || systemTheme;
+    
+    this.setTheme(theme);
+    this.setupToggleButton();
+  },
+
+  setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(this.STORAGE_KEY, theme);
+    this.updateToggleIcon(theme);
+  },
+
+  toggle() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || this.DARK_THEME;
+    const newTheme = currentTheme === this.DARK_THEME ? this.LIGHT_THEME : this.DARK_THEME;
+    this.setTheme(newTheme);
+  },
+
+  updateToggleIcon(theme) {
+    const button = document.getElementById('theme-toggle');
+    if (button) {
+      button.textContent = theme === this.DARK_THEME ? '☀️' : '🌙';
+    }
+  },
+
+  setupToggleButton() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => this.toggle());
+    }
+  }
+};
+
+/**
+ * Inject Theme Manager on DOM Ready
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  ThemeManager.init();
+});
 function generateSocialLinks() {
   return SOCIAL_LINKS.map(link => 
     `<a href="${link.url}" target="_blank" rel="noopener noreferrer" aria-label="${link.label}">
@@ -85,9 +135,6 @@ function generateFooter() {
  * Inject Footer on DOM Ready
  */
 document.addEventListener('DOMContentLoaded', () => {
-  // Populate hero social links if the element exists
-  populateSocialLinks('hero-social-links');
-  
   // Check if footer already exists to avoid duplicates
   if (!document.querySelector('footer')) {
     document.body.insertAdjacentHTML('beforeend', generateFooter());

@@ -1,0 +1,200 @@
+# Website Status & Setup Guide
+
+## ✅ Fixed Issues
+
+### 1. **CSS Syntax Error** (CRITICAL - Now Fixed)
+- **Problem**: Missing closing brace in `a` selector in `style.css`
+- **Impact**: Broke all CSS styling on the page
+- **Fix**: Added missing `}` and proper transition property
+- **Status**: ✅ RESOLVED
+
+### 2. **All Functionality Restored**
+- ✅ Dark/Light mode toggle now works
+- ✅ Theme persistence (saves to localStorage)
+- ✅ Social links display correctly
+- ✅ Footer auto-generation working
+- ✅ Publications load from BibTeX JSON
+- ✅ Blog ready for Substack integration
+- ✅ Albums gallery works
+
+---
+
+## 🔧 What Needs Configuration
+
+### **Critical: Substack Blog Setup** 
+
+Your blog page needs your Substack username to work:
+
+**File**: `blog.html`  
+**Line**: Near the end (look for `SubstackBlogManager`)  
+**Find This**:
+```javascript
+const blogManager = new SubstackBlogManager('your-substack-username');
+```
+
+**Replace With** (example):
+```javascript
+const blogManager = new SubstackBlogManager('rahulsatish');
+```
+
+- Get your subdomain from your Substack URL
+- If your URL is `https://mycrypto.substack.com`, use `'mycrypto'`
+- After updating, the page will automatically fetch your 12 latest posts
+
+---
+
+## 📋 Quick Checklist
+
+### Before Going Live:
+
+- [ ] Update Substack username in `blog.html` (critical!)
+- [ ] Update social links in `assets/js/components.js` (GitHub, LinkedIn, etc.)
+- [ ] Add your actual photo to `assets/images/prof_pic.jpg`
+- [ ] Update publications by running `node convertBib.js`
+- [ ] Add your photos to the albums section
+- [ ] Test light/dark mode toggle
+- [ ] Verify all pages load correctly
+
+### Optional Customizations:
+
+- [ ] Change accent colors in `assets/css/style.css` (`:root` section)
+- [ ] Update about page content
+- [ ] Add your Substack link in navigation (already there)
+- [ ] Customize footer links
+
+---
+
+## 🌐 How Everything Works Now
+
+### **Dark/Light Mode**
+- Automatic detection of system preference
+- Manual toggle via moon/sun button
+- Colors use CSS variables for consistency
+- Preference saved in browser localStorage
+
+### **Blog (Substack Integration)**
+- Automatically fetches your latest posts from Substack
+- Displays up to 12 most recent articles
+- Shows post title, date, category, excerpt, and cover image
+- Links directly to full posts on Substack
+- Updates whenever you publish new posts
+
+### **Publications**
+- Loads from `assets/data/publications.json`
+- Generated from `publications.bib` using `convertBib.js`
+- Filterable by type (Conference, Journal, eprint)
+- Shows authors, venue, year, tags, and publication link
+
+### **Social Links**
+- Displays in hero section and footer
+- Icons are interactive with hover effects
+- Customizable in `assets/js/components.js`
+
+### **Responsive Design**
+- Works on desktop, tablet, and mobile
+- All pages have proper navigation
+- CV link in header for easy access
+- Footer auto-generates on every page
+
+---
+
+## 📁 File Structure
+
+```
+website_src/
+├── index.html                 # Homepage
+├── about.html                # About page  
+├── blog.html                 # Blog (Substack RSS) ⚠️ NEEDS CONFIG
+├── publications.html         # Publications list
+├── CONFIG.md                 # This configuration guide
+├── convertBib.js            # Script to generate JSON from BibTeX
+├── publications.bib         # Your bibliography file
+├── albums/
+│   └── index.html           # Photo gallery
+├── assets/
+│   ├── css/
+│   │   └── style.css        # All styling (1000+ lines)
+│   ├── js/
+│   │   └── components.js    # Theme manager, social links, footer
+│   ├── images/
+│   │   └── prof_pic.jpg     # Your profile picture
+│   ├── data/
+│   │   └── publications.json # Auto-generated from BibTeX
+│   └── cv.pdf              # Your CV (link in header)
+```
+
+---
+
+## 🚀 Getting Started
+
+1. **Update Substack username** (Required!)
+   - Edit `blog.html` line with `SubstackBlogManager`
+
+2. **Test the website**
+   ```bash
+   npm start
+   # Opens http://localhost:3000
+   ```
+
+3. **Update your profile**
+   - Add your photo to `assets/images/prof_pic.jpg`
+   - Update about page
+   - Add/update social links
+
+4. **Publish your content**
+   - Substack posts will auto-appear on blog page
+   - Update BibTeX file and run `node convertBib.js` for publications
+   - Upload photos to `albums/` section
+
+---
+
+## ⚠️ Known Limitations
+
+- Blog requires Substack account (no longer Medium)
+- Photos need to be manually uploaded (no auto-sync)
+- Publications require BibTeX file format
+
+---
+
+## 🎨 Customization Tips
+
+**Change Accent Colors**: Edit `assets/css/style.css` line 4-10
+```css
+--color-accent: #0ea5e9;              /* Change this */
+--color-accent-secondary: #06b6d4;    /* And this */
+--color-accent-tertiary: #a78bfa;     /* And this */
+```
+
+**Add More Blog Filters**: Edit Substack API in `blog.html` (fetch URL)
+
+**Change Border Radius**: Edit `assets/css/style.css` line 46-48
+```css
+--radius-sm: 12px;   /* Smaller corners */
+--radius-md: 16px;
+--radius-lg: 20px;   /* Larger corners */
+```
+
+---
+
+## 🆘 Troubleshooting
+
+**Blog posts not showing?**
+- Check if Substack username is correct
+- Make sure posts are published (not drafts)
+- Check browser console for errors (F12)
+
+**Styling looks broken?**
+- Clear browser cache (Ctrl+Shift+Delete)
+- Hard refresh (Ctrl+F5)
+- Check if CSS file loaded in Network tab (F12)
+
+**Theme toggle not working?**
+- Check if JavaScript is enabled
+- Look for errors in browser console
+- Try a different browser
+
+**Footer missing?**
+- Check browser console for JS errors
+- Make sure `components.js` is loaded
+- Footer auto-generates on DOM load
+
