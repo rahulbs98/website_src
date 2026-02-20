@@ -159,100 +159,20 @@
       <p>A collection of moments captured around the world - travel, architecture, and everyday life.</p>
     </div>
 
-    <div class="albums-filters">
-      <button class="filter-btn active" data-filter="all">All Photos</button>
-      <button class="filter-btn" data-filter="travel">Travel</button>
-      <button class="filter-btn" data-filter="architecture">Architecture</button>
-      <button class="filter-btn" data-filter="nature">Nature</button>
-      <button class="filter-btn" data-filter="street">Street</button>
-      <button class="filter-btn" data-filter="portrait">Portrait</button>
-    </div>
+    <div id="albums-filters" class="albums-filters" style="display:none;"></div>
 
     <div id="photo-grid" class="photo-grid">
       <!-- Photos will be loaded here -->
     </div>
 
     <div id="empty-state" class="empty-state" style="display:none;">
-      <p>No photos available in this category yet.</p>
+      <p>No photos available yet.</p>
     </div>
   </main>
 
   <script>
-    // Sample photo albums data
-    const photoAlbums = [
-      {
-        id: 1,
-        title: "Mountain Vista",
-        image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
-        tags: ["nature", "travel"],
-        location: "Swiss Alps",
-        date: "August 2024",
-        camera: "Canon EOS R5"
-      },
-      {
-        id: 2,
-        title: "Urban Geometry",
-        image: "https://images.unsplash.com/photo-1479749971702-3926f33d3a6e?w=600&q=80",
-        tags: ["architecture", "street"],
-        location: "Berlin, Germany",
-        date: "July 2024",
-        camera: "Sony A7IV"
-      },
-      {
-        id: 3,
-        title: "Sunset at the Coast",
-        image: "https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=600&q=80",
-        tags: ["nature", "travel"],
-        location: "Amalfi Coast, Italy",
-        date: "June 2024",
-        camera: "Canon EOS R5"
-      },
-      {
-        id: 4,
-        title: "Modern Architecture",
-        image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80",
-        tags: ["architecture"],
-        location: "Tokyo, Japan",
-        date: "May 2024",
-        camera: "Fujifilm X-T5"
-      },
-      {
-        id: 5,
-        title: "Street Life",
-        image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=600&q=80",
-        tags: ["street", "travel"],
-        location: "Barcelona, Spain",
-        date: "April 2024",
-        camera: "Sony A7IV"
-      },
-      {
-        id: 6,
-        title: "Nature Walk",
-        image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
-        tags: ["nature"],
-        location: "Black Forest, Germany",
-        date: "September 2024",
-        camera: "Canon EOS R5"
-      },
-      {
-        id: 7,
-        title: "City Lights",
-        image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&q=80",
-        tags: ["street", "architecture"],
-        location: "Singapore",
-        date: "March 2024",
-        camera: "Sony A7IV"
-      },
-      {
-        id: 8,
-        title: "Forest Path",
-        image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
-        tags: ["nature", "travel"],
-        location: "Switzerland",
-        date: "October 2024",
-        camera: "Fujifilm X-T5"
-      }
-    ];
+    const dataUrl = '../assets/data/albums.json';
+    let photoAlbums = [];
 
     function renderPhotos(photos) {
       const grid = document.getElementById('photo-grid');
@@ -267,45 +187,84 @@
       grid.style.display = 'grid';
       emptyState.style.display = 'none';
 
-      grid.innerHTML = photos.map(photo => `
+      grid.innerHTML = photos.map(photo => {
+        const metaParts = [];
+        if (photo.location) {
+          metaParts.push(`📍 ${photo.location}`);
+        }
+        if (photo.date) {
+          metaParts.push(photo.date);
+        }
+        const metaLine = metaParts.join(' · ');
+        const tags = Array.isArray(photo.tags) ? photo.tags : [];
+
+        return `
         <div class="photo-card" data-tags="${photo.tags.join(' ')}">
           <img src="${photo.image}" alt="${photo.title}" loading="lazy">
           <div class="photo-overlay">
             <div class="photo-title">${photo.title}</div>
-            <div class="photo-meta">📍 ${photo.location} · ${photo.date}</div>
-            <div class="photo-tags">
-              ${photo.tags.map(tag => `<span class="photo-tag">${tag}</span>`).join('')}
-            </div>
+            ${metaLine ? `<div class="photo-meta">${metaLine}</div>` : ''}
+            ${tags.length ? `<div class="photo-tags">${tags.map(tag => `<span class="photo-tag">${tag}</span>`).join('')}</div>` : ''}
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
     }
 
     function setupFilters() {
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      
+      const filtersContainer = document.getElementById('albums-filters');
+      const tags = new Set();
+
+      photoAlbums.forEach(photo => {
+        (photo.tags || []).forEach(tag => tags.add(tag));
+      });
+
+      if (photoAlbums.length === 0 || tags.size === 0) {
+        filtersContainer.style.display = 'none';
+        return;
+      }
+
+      filtersContainer.style.display = 'flex';
+      filtersContainer.innerHTML = [
+        '<button class="filter-btn active" data-filter="all">All Photos</button>',
+        ...Array.from(tags).sort().map(tag => `
+          <button class="filter-btn" data-filter="${tag}">${tag}</button>
+        `)
+      ].join('');
+
+      const filterBtns = filtersContainer.querySelectorAll('.filter-btn');
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-          // Update active state
           filterBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
-          // Filter photos
           const filter = btn.getAttribute('data-filter');
-          let filtered = photoAlbums;
-
-          if (filter !== 'all') {
-            filtered = photoAlbums.filter(photo => photo.tags.includes(filter));
-          }
+          const filtered = filter === 'all'
+            ? photoAlbums
+            : photoAlbums.filter(photo => (photo.tags || []).includes(filter));
 
           renderPhotos(filtered);
         });
       });
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    async function loadAlbums() {
+      try {
+        const response = await fetch(dataUrl);
+        if (!response.ok) {
+          throw new Error('Failed to load albums data');
+        }
+        photoAlbums = await response.json();
+      } catch (error) {
+        console.error('Error loading albums:', error);
+        photoAlbums = [];
+      }
       renderPhotos(photoAlbums);
       setupFilters();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadAlbums();
     });
   </script>
 

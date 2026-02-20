@@ -52,6 +52,11 @@ This repository contains the **source code** for my personal website, hosted at 
    npm run pubs
    ```
 
+6. **Regenerate Albums (optional)**
+   ```bash
+   npm run albums
+   ```
+
 ## Deployment (GitHub Pages)
 
 1. Push your changes to the `main` branch.
@@ -59,6 +64,22 @@ This repository contains the **source code** for my personal website, hosted at 
 3. Under **Build and deployment**, select **Deploy from a branch**.
 4. Choose `main` and the `/ (root)` folder, then save.
 5. Your site will be available at `https://rahulbs98.github.io`.
+
+## Albums (Auto-Generated)
+
+1. Add images to `assets/images/albums/`.
+2. (Optional) Add metadata in `assets/data/albums.meta.json` using filenames as keys:
+    ```json
+    {
+       "my-photo.jpg": {
+          "title": "My Photo",
+          "tags": ["travel", "architecture"],
+          "location": "Tokyo, Japan",
+          "date": "May 2024"
+       }
+    }
+    ```
+3. Run `npm run albums` (or `npm start` / `npm run build`) to regenerate `assets/data/albums.json`.
 
 ## Contributing
 

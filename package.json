@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "pubs": "node convertBib.js",
-    "prestart": "npm run pubs",
+    "albums": "node generateAlbums.js",
+    "prestart": "npm run pubs && npm run albums",
     "start": "live-server --port=3000 --open=./",
-    "prebuild": "npm run pubs",
+    "prebuild": "npm run pubs && npm run albums",
     "build": "echo 'Add your production build steps here later'"
   },
   "repository": {

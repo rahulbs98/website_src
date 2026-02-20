@@ -85,6 +85,31 @@ This will fetch your latest BibTeX from DBLP, update `publications.bib`, and reg
 
 ---
 
+## Albums (Auto-Generated)
+
+Images are read from `assets/images/albums/` and converted into `assets/data/albums.json`.
+
+Optional metadata lives in `assets/data/albums.meta.json`:
+
+```json
+{
+  "my-photo.jpg": {
+    "title": "My Photo",
+    "tags": ["travel", "architecture"],
+    "location": "Tokyo, Japan",
+    "date": "May 2024"
+  }
+}
+```
+
+Regenerate with:
+
+```bash
+npm run albums
+```
+
+---
+
 ## Quick File Reference
 
 | File | Purpose |
