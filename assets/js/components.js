@@ -29,9 +29,9 @@ const SOCIAL_LINKS = [
   { icon: 'github', url: 'https://github.com/rahulbs98', label: 'GitHub', relMe: true },
   { icon: 'linkedin', url: 'https://www.linkedin.com/in/rahulbs98', label: 'LinkedIn', relMe: true },
   { icon: 'email', url: 'mailto:rahs@itu.dk', label: 'Email', relMe: true },
-  { icon: 'signal', url: 'https://signal.org', label: 'Signal', relMe: true },
-  { icon: 'scholar', url: 'https://scholar.google.com/citations?user=YOUR_ID', label: 'Google Scholar' },
-  { icon: 'dblp', url: 'https://dblp.org/pid/XX/XXX.html', label: 'DBLP' },
+  { icon: 'signal', url: 'https://signal.me/#eu/E2mrsfMg_t_ECFDT8K3s2Be9bXmmtc2psAXhQ8SCl-VSTzs8IjZB5b69d6Ydr8xd', label: 'Signal', relMe: true },
+  { icon: 'scholar', url: 'https://scholar.google.com/citations?user=LskQKm0AAAAJ', label: 'Google Scholar' },
+  { icon: 'dblp', url: 'https://dblp.org/pid/370/6614.html', label: 'DBLP' },
 ];
 
 /**

@@ -4,7 +4,10 @@
   "description": "This repository contains the **source code** for my personal website, hosted at [rahulbs98.github.io](https://rahulbs98.github.io) and mirrored to [rahulbs.me](https://rahulbs.me). The website is academic-focused, showcases my photography, and links to my blog posts (Medium/Substack).",
   "main": "index.js",
   "scripts": {
+    "pubs": "node convertBib.js",
+    "prestart": "npm run pubs",
     "start": "live-server --port=3000 --open=./",
+    "prebuild": "npm run pubs",
     "build": "echo 'Add your production build steps here later'"
   },
   "repository": {

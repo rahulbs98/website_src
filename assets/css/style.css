@@ -54,8 +54,8 @@
   --color-text-secondary: #4b4b4b;
   --color-border: rgba(17,17,17,0.08);
   --color-shadow: rgba(2,6,23,0.03);
-  --color-accent: #9CA3AF;
-  --color-accent-secondary: #6B7280;
+  --color-accent: #2563EB;
+  --color-accent-secondary: #1D4ED8;
 }
 
 /* ===============================
@@ -526,7 +526,7 @@ footer .social-links a:hover {
    Publications (Revamped)
    =============================== */
 .research-page h1 {
-  text-align: left;
+  text-align: center;
   max-width: 1000px;
   margin: 0 auto var(--spacing-lg);
 }
@@ -557,6 +557,17 @@ footer .social-links a:hover {
   font-size: var(--font-size-lg);
   margin-bottom: var(--spacing-sm);
   color: var(--color-text-primary);
+}
+
+.pub-note {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.pub-note a {
+  color: var(--color-accent);
+  text-decoration: underline;
 }
 .pub-filters {
   display: flex;
@@ -807,6 +818,13 @@ footer p {
   margin-bottom: var(--spacing-md);
   font-weight: 500;
   color: var(--color-text-secondary);
+}
+
+.hero-name-local {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-xs);
+  letter-spacing: 0.01em;
 }
 
 .hero-text p {

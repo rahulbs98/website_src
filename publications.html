@@ -31,6 +31,7 @@
 
     <section class="research-publications">
       <h2>Publications</h2>
+      <p class="pub-note">* indicates authors listed in alphabetical order following the <a href="https://en.wikipedia.org/wiki/Academic_authorship#Authorship_in_mathematics,_theoretical_computer_science_and_high_energy_physics" target="_blank">Hardy-Littlewood rule</a>.</p>
       <div class="pub-filters">
         <button class="filter-btn active" data-filter="all">All</button>
         <button class="filter-btn" data-filter="conference">Conferences</button>
@@ -78,6 +79,9 @@
           const tags = entry.entryTags;
           const journalStr = (tags.journal || '').toLowerCase();
           const entryType = (entry.entryType || '').toLowerCase();
+          const url = this.normalizeUrl(tags.url || '');
+          const doi = this.normalizeUrl(tags.doi || '');
+          const doiUrl = doi ? `https://doi.org/${doi}` : '';
 
           // Determine publication type based on journal/type name
           let pubType = 'eprint';
@@ -96,12 +100,19 @@
             year: tags.year || '',
             type: pubType,
             venue: this.cleanText(tags.journal || tags.booktitle || 'Unknown Venue'),
-            url: tags.url || '',
+            url: url || doiUrl,
             pages: tags.pages || '',
             abstract: tags.abstract || 'No abstract available',
             tags: this.extractTags(tags.title, tags.keywords)
           };
         }).sort((a, b) => parseInt(b.year) - parseInt(a.year));
+      }
+
+      normalizeUrl(value) {
+        if (!value) return '';
+        return value
+          .replace(/\\_/g, '_')
+          .replace(/([A-Za-z0-9])\/_/g, '$1_');
       }
 
       cleanText(text) {
