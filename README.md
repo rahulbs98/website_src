@@ -1,26 +1,27 @@
 # Rahul's Personal Website Source
 
-This repository contains the **source code** for my personal website, hosted at [rahulbs98.github.io](https://rahulbs98.github.io) and mirrored to [rahulbs.me](https://rahulbs.me). The website is academic-focused, showcases my photography, and links to my blog posts (Medium/Substack).
+This repository contains the **source code** for my personal website, hosted at [rahulbs98.github.io](https://rahulbs98.github.io) and mirrored to [rahulbs.me](https://rahulbs.me). The website showcases my research in applied cryptography and secure computation, features my photography, and links to my Substack blog.
 
 ---
 
 ## Features
 
-- Academic portfolio and CV
-- Blog section via Substack
-- Research publications loaded from DBLP BibTeX
-- Photography albums
+- Applied cryptography research portfolio and CV
+- Blog section integrated with Substack
+- Research publications loaded from BibTeX
+- Photography albums with metadata support
 - Dark/light theme toggle
-- Fully responsive and privacy-conscious
+- Fully responsive design
 
 ---
 
 ## Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript (Vanilla or frameworks as needed)
+- **Frontend:** HTML, CSS, JavaScript (Vanilla)
 - **Build Tools:** Node.js, npm
 - **Deployment:** GitHub Pages (via rahulbs98.github.io)
-- **Optional Enhancements:** Cloudflare Pages, static site generators (Jekyll, Eleventy, Astro)
+- **Blog Integration:** Substack API
+- **Metadata:** BibTeX for publications, JSON for albums
 
 ---
 
