@@ -131,7 +131,6 @@ header {
 nav {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: var(--spacing-md);
   max-width: 1400px;
   margin: 0 auto;
@@ -142,7 +141,6 @@ nav {
   align-items: center;
   gap: var(--spacing-md);
   flex: 1;
-  margin-left: var(--spacing-md);
 }
 
 nav a {
@@ -194,24 +192,27 @@ nav .logo {
 }
 
 .nav-links.open {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 60px;
   left: 0;
   right: 0;
-  width: 100%;
+  width: 100vw;
   flex-direction: column;
   gap: 0;
   background-color: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
   padding: var(--spacing-md);
   align-items: flex-start;
+  z-index: 99;
   margin-left: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .nav-links.open a {
   display: block;
   padding: var(--spacing-sm) 0;
   width: 100%;
+  border-bottom: 1px solid var(--color-border);
 }
 
 #theme-toggle {
