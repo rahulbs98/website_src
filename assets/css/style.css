@@ -131,11 +131,10 @@ header {
 nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-wrap: wrap;
   gap: var(--spacing-md);
   max-width: 1400px;
   margin: 0 auto;
-  position: relative;
 }
 
 .nav-links {
@@ -143,7 +142,7 @@ nav {
   align-items: center;
   gap: var(--spacing-md);
   flex: 1;
-  margin: 0 0 0 var(--spacing-md);
+  margin-left: var(--spacing-md);
 }
 
 nav a {
@@ -151,7 +150,6 @@ nav a {
   font-weight: 500;
   transition: var(--transition);
   position: relative;
-  white-space: nowrap;
 }
 
 nav a::after {
@@ -172,9 +170,9 @@ nav a:hover::after {
 nav .logo {
   font-weight: 700;
   font-size: 1.15rem;
+  margin-right: 0;
   color: var(--color-text-primary);
   letter-spacing: -0.01em;
-  flex-shrink: 0;
 }
 
 #menu-toggle {
@@ -205,8 +203,9 @@ nav .logo {
   gap: 0;
   background-color: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
-  padding: var(--spacing-md) var(--spacing-md);
+  padding: var(--spacing-md);
   align-items: flex-start;
+  margin-left: 0;
 }
 
 .nav-links.open a {
@@ -1204,15 +1203,21 @@ footer p {
 
   nav {
     gap: var(--spacing-sm);
+    flex-wrap: nowrap;
+    gap: 0;
   }
 
   .nav-links {
-    display: none;
-    margin: 0;
+    display: none !important;
+    margin-left: 0;
+  }
+
+  .nav-links.open {
+    display: flex !important;
   }
 
   #menu-toggle {
-    display: block;
+    display: block !important;
   }
 
   main {
@@ -1279,20 +1284,24 @@ footer p {
 
   nav {
     gap: var(--spacing-xs);
+    flex-wrap: nowrap;
   }
 
   .nav-links {
-    display: none;
-    margin: 0;
+    display: none !important;
+    margin-left: 0;
   }
 
   .nav-links.open {
-    padding: var(--spacing-sm);
+    display: flex !important;
   }
 
   #menu-toggle {
-    display: block;
-    margin: 0 0 0 auto;
+    display: block !important;
+  }
+
+  .nav-links.open a {
+    padding: var(--spacing-sm) 0;
   }
 
   nav a {
