@@ -115,8 +115,8 @@ function generateFooter() {
       <div class="footer-content">
         <div class="footer-links">
           <a href="index.html">Home</a>
-          <a href="about.html">About</a>
-          <a href="publications.html">Publications</a>
+          <a href="bio.html">Bio</a>
+          <a href="research.html">Research</a>
           <a href="blog.html">Blog</a>
           <a href="mailto:rahs@itu.dk">Contact</a>
         </div>

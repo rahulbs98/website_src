@@ -8,13 +8,12 @@ To connect your Substack blog to the website, you need to update the blog page w
 
 1. **Open `blog.html`**
 2. **Find this line** (near the bottom):
-   ```javascript
-   const blogManager = new SubstackBlogManager('your-substack-username');
-   ```
+  ```javascript
+  const blogManager = new SubstackBlogManager('rahulsatish98');
+  ```
 
-3. **Replace `'your-substack-username'`** with your actual Substack subdomain
-   - Example: If your Substack URL is `https://mycryptoblog.substack.com`, use `'mycryptoblog'`
-   - Example: If your Substack URL is `https://rahulsatish.substack.com`, use `'rahulsatish'`
+3. **Replace `'rahulsatish98'`** with your Substack subdomain
+  - Example: If your Substack URL is `https://mycryptoblog.substack.com`, use `'mycryptoblog'`
 
 ### How It Works:
 
@@ -89,20 +88,21 @@ This will fetch your latest BibTeX from DBLP, update `publications.bib`, and reg
 
 Images are read from `assets/images/albums/` and converted into `assets/data/albums.json`.
 
-Optional metadata lives in `assets/data/albums.meta.json`:
+Metadata lives in `assets/data/albums.meta.json` using the album folder and filename as the key:
 
 ```json
 {
-  "my-photo.jpg": {
-    "title": "My Photo",
+  "tokyo-2024/photo1.jpg": {
+    "title": "Shibuya Crossing",
     "tags": ["travel", "architecture"],
     "location": "Tokyo, Japan",
-    "date": "May 2024"
+    "date": "2024-05-15",
+    "album": "tokyo-2024"
   }
 }
 ```
 
-Regenerate with:
+Regenerate `albums.json` with:
 
 ```bash
 npm run albums
@@ -115,9 +115,9 @@ npm run albums
 | File | Purpose |
 |------|---------|
 | `index.html` | Homepage |
-| `about.html` | Bio page |
+| `bio.html` | Bio page |
 | `blog.html` | Blog (Substack integration) |
-| `publications.html` | Research page |
+| `research.html` | Research page |
 | `links.html` | Interesting links |
 | `albums/index.html` | Photo gallery |
 | `assets/css/style.css` | Styling (theme colors, layouts) |

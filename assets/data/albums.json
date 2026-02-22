@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "title": "Louvre - Night View (2)",
+    "image": "assets/images/albums/paris-2024/Instagram_upload-1.jpg",
+    "album": "paris-2024",
+    "tags": [
+      "Paris",
+      "France",
+      "Architecture",
+      "Night"
+    ],
+    "location": "Paris, France",
+    "date": ""
+  },
+  {
+    "id": 2,
+    "title": "Louvre - Night View (1)",
+    "image": "assets/images/albums/paris-2024/Instagram_upload-2.jpg",
+    "album": "paris-2024",
+    "tags": [
+      "Paris",
+      "France",
+      "Architecture",
+      "Night"
+    ],
+    "location": "Paris, France",
+    "date": ""
+  },
+  {
+    "id": 3,
+    "title": "French Parliament",
+    "image": "assets/images/albums/paris-2024/Instagram_upload-3.jpg",
+    "album": "paris-2024",
+    "tags": [
+      "Paris",
+      "France",
+      "Architecture",
+      "Night"
+    ],
+    "location": "Paris, France",
+    "date": ""
+  },
+  {
+    "id": 4,
+    "title": "Eiffel Tower - Sunset",
+    "image": "assets/images/albums/paris-2024/Instagram_upload-4.jpg",
+    "album": "paris-2024",
+    "tags": [
+      "Paris",
+      "France",
+      "Architecture",
+      "Sunset"
+    ],
+    "location": "Paris, France",
+    "date": ""
+  },
+  {
+    "id": 5,
+    "title": "Eiffel Tower - NIght View",
+    "image": "assets/images/albums/paris-2024/Instagram_upload-5.jpg",
+    "album": "paris-2024",
+    "tags": [
+      "Paris",
+      "France",
+      "Architecture",
+      "Night"
+    ],
+    "location": "Paris, France",
+    "date": ""
+  },
+  {
+    "id": 6,
+    "title": "Eiffel Tower - City Night View",
+    "image": "assets/images/albums/paris-2024/Instagram_upload-6.jpg",
+    "album": "paris-2024",
+    "tags": [
+      "Paris",
+      "France",
+      "Architecture",
+      "Night"
+    ],
+    "location": "Paris, France",
+    "date": ""
+  }
+]
