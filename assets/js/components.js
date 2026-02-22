@@ -132,6 +132,34 @@ function generateFooter() {
 }
 
 /**
+ * Mobile Menu Toggle
+ */
+function setupMenuToggle() {
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+  
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+    
+    // Close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+        navLinks.classList.remove('open');
+      }
+    });
+  }
+}
+
+/**
  * Inject Footer on DOM Ready
  */
 document.addEventListener('DOMContentLoaded', () => {
@@ -139,4 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!document.querySelector('footer')) {
     document.body.insertAdjacentHTML('beforeend', generateFooter());
   }
+  
+  // Setup mobile menu toggle
+  setupMenuToggle();
 });

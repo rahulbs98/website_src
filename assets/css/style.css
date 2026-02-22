@@ -131,10 +131,19 @@ header {
 nav {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: space-between;
   gap: var(--spacing-md);
   max-width: 1400px;
   margin: 0 auto;
+  position: relative;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex: 1;
+  margin: 0 0 0 var(--spacing-md);
 }
 
 nav a {
@@ -142,6 +151,7 @@ nav a {
   font-weight: 500;
   transition: var(--transition);
   position: relative;
+  white-space: nowrap;
 }
 
 nav a::after {
@@ -162,9 +172,47 @@ nav a:hover::after {
 nav .logo {
   font-weight: 700;
   font-size: 1.15rem;
-  margin-right: auto;
   color: var(--color-text-primary);
   letter-spacing: -0.01em;
+  flex-shrink: 0;
+}
+
+#menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0 0 0 auto;
+  transition: var(--transition);
+}
+
+#menu-toggle:hover {
+  color: var(--color-accent);
+}
+
+.nav-links.open {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  flex-direction: column;
+  gap: 0;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--spacing-md) var(--spacing-md);
+  align-items: flex-start;
+}
+
+.nav-links.open a {
+  display: block;
+  padding: var(--spacing-sm) 0;
+  width: 100%;
 }
 
 #theme-toggle {
@@ -1158,6 +1206,15 @@ footer p {
     gap: var(--spacing-sm);
   }
 
+  .nav-links {
+    display: none;
+    margin: 0;
+  }
+
+  #menu-toggle {
+    display: block;
+  }
+
   main {
     padding: var(--spacing-md) var(--spacing-xs);
   }
@@ -1221,9 +1278,21 @@ footer p {
   }
 
   nav {
-    flex-direction: column;
-    align-items: flex-start;
     gap: var(--spacing-xs);
+  }
+
+  .nav-links {
+    display: none;
+    margin: 0;
+  }
+
+  .nav-links.open {
+    padding: var(--spacing-sm);
+  }
+
+  #menu-toggle {
+    display: block;
+    margin: 0 0 0 auto;
   }
 
   nav a {
