@@ -66,21 +66,68 @@ This repository contains the **source code** for my personal website, hosted at 
 4. Choose `main` and the `/ (root)` folder, then save.
 5. Your site will be available at `https://rahulbs98.github.io`.
 
-## Albums (Auto-Generated)
+## Albums (Organized & Tagged)
 
-1. Add images to `assets/images/albums/`.
-2. (Optional) Add metadata in `assets/data/albums.meta.json` using filenames as keys:
+### Using Photo Manager App (Recommended)
+
+The `photomanager/` directory contains a **Rust-based Tauri desktop app** for efficiently organizing photos.
+
+**Setup:**
+```bash
+cd photomanager
+npm install
+npm run dev  # Start the app
+```
+
+**Workflow:**
+1. Select a folder with photos
+2. App scans and extracts EXIF data (date, location)
+3. Edit metadata (titles, tags, location, date) for each photo
+4. Create album → automatically copies photos and generates JSON
+
+**Next steps after creating album:**
+```bash
+cd ..
+npm run albums  # Regenerate albums.json
+```
+
+**Features:**
+- ✅ EXIF auto-extraction
+- ✅ Fast Rust backend
+- ✅ Cross-platform (macOS, Windows, Linux)
+- ✅ Auto-generates `albums.meta.json`
+
+See [photomanager/README.md](photomanager/README.md) for detailed setup.
+
+### Manual Workflow (No App)
+
+1. Create folder structure:
+   ```
+   assets/images/albums/
+   ├── tokyo-2024/
+   │   ├── photo1.jpg
+   │   └── photo2.jpg
+   └── goa-2024/
+       ├── photo3.jpg
+       └── photo4.jpg
+   ```
+
+2. Add metadata in `assets/data/albums.meta.json`:
     ```json
     {
-       "my-photo.jpg": {
-          "title": "My Photo",
+       "tokyo-2024/photo1.jpg": {
+          "title": "Shibuya Crossing",
           "tags": ["travel", "architecture"],
           "location": "Tokyo, Japan",
           "date": "May 2024"
        }
     }
     ```
-3. Run `npm run albums` (or `npm start` / `npm run build`) to regenerate `assets/data/albums.json`.
+
+3. Regenerate albums:
+   ```bash
+   npm run albums
+   ```
 
 ## Contributing
 

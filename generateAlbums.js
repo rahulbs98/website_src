@@ -29,26 +29,46 @@ function loadMeta() {
   }
 }
 
-function getImages() {
-  if (!fs.existsSync(IMAGES_DIR)) {
+function isDirectory(filePath) {
+  return fs.statSync(filePath).isDirectory();
+}
+
+function getImagesRecursive(dir, albumName = '', imageId = { current: 1 }) {
+  if (!fs.existsSync(dir)) {
     return [];
   }
 
   const meta = loadMeta();
-  return fs.readdirSync(IMAGES_DIR)
-    .filter(file => IMAGE_EXTS.has(path.extname(file).toLowerCase()))
-    .sort()
-    .map((file, index) => {
-      const info = meta[file] || {};
-      return {
-        id: index + 1,
-        title: info.title || toTitle(file),
-        image: `assets/images/albums/${file}`,
+  const images = [];
+
+  const entries = fs.readdirSync(dir).sort();
+  
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry);
+    
+    if (isDirectory(fullPath)) {
+      // Recursively process subdirectories
+      const subAlbumName = entry;
+      const subImages = getImagesRecursive(fullPath, subAlbumName, imageId);
+      images.push(...subImages);
+    } else if (IMAGE_EXTS.has(path.extname(entry).toLowerCase())) {
+      // Process image files
+      const relativePath = path.relative(IMAGES_DIR, fullPath).replace(/\\/g, '/');
+      const info = meta[relativePath] || {};
+      
+      images.push({
+        id: imageId.current++,
+        title: info.title || toTitle(entry),
+        image: `assets/images/albums/${relativePath}`,
+        album: albumName || info.album || 'Unsorted',
         tags: Array.isArray(info.tags) ? info.tags : [],
         location: info.location || '',
         date: info.date || ''
-      };
-    });
+      });
+    }
+  }
+
+  return images;
 }
 
 function writeJson(data) {
@@ -56,7 +76,7 @@ function writeJson(data) {
 }
 
 function run() {
-  const images = getImages();
+  const images = getImagesRecursive(IMAGES_DIR);
   writeJson(images);
   console.log(`Generated ${OUTPUT_PATH} with ${images.length} items.`);
 }

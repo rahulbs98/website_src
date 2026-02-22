@@ -129,6 +129,18 @@
       border: 1px solid rgba(0, 212, 255, 0.4);
     }
 
+    .album-section {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .album-section h2 {
+      font-size: 1.4rem;
+      margin-bottom: var(--spacing-md);
+      color: var(--color-text-primary);
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 2px solid var(--color-border);
+    }
+
     .empty-state {
       text-align: center;
       padding: var(--spacing-xl);
@@ -178,6 +190,29 @@
     const dataUrl = '../assets/data/albums.json';
     let photoAlbums = [];
 
+    function renderPhotoCard(photo) {
+      const metaParts = [];
+      if (photo.location) {
+        metaParts.push(`📍 ${photo.location}`);
+      }
+      if (photo.date) {
+        metaParts.push(photo.date);
+      }
+      const metaLine = metaParts.join(' · ');
+      const tags = Array.isArray(photo.tags) ? photo.tags : [];
+
+      return `
+        <div class="photo-card" data-tags="${photo.tags.join(' ')}">
+          <img src="${photo.image}" alt="${photo.title}" loading="lazy">
+          <div class="photo-overlay">
+            <div class="photo-title">${photo.title}</div>
+            ${metaLine ? `<div class="photo-meta">${metaLine}</div>` : ''}
+            ${tags.length ? `<div class="photo-tags">${tags.map(tag => `<span class="photo-tag">${tag}</span>`).join('')}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
     function renderPhotos(photos) {
       const grid = document.getElementById('photo-grid');
       const emptyState = document.getElementById('empty-state');
@@ -188,31 +223,30 @@
         return;
       }
 
-      grid.style.display = 'grid';
+      // Group photos by album
+      const albums = {};
+      photos.forEach(photo => {
+        const albumName = photo.album || 'Unsorted';
+        if (!albums[albumName]) {
+          albums[albumName] = [];
+        }
+        albums[albumName].push(photo);
+      });
+
+      // Sort album names
+      const sortedAlbumNames = Object.keys(albums).sort();
+
+      grid.style.display = 'block';
       emptyState.style.display = 'none';
 
-      grid.innerHTML = photos.map(photo => {
-        const metaParts = [];
-        if (photo.location) {
-          metaParts.push(`📍 ${photo.location}`);
-        }
-        if (photo.date) {
-          metaParts.push(photo.date);
-        }
-        const metaLine = metaParts.join(' · ');
-        const tags = Array.isArray(photo.tags) ? photo.tags : [];
-
-        return `
-        <div class="photo-card" data-tags="${photo.tags.join(' ')}">
-          <img src="${photo.image}" alt="${photo.title}" loading="lazy">
-          <div class="photo-overlay">
-            <div class="photo-title">${photo.title}</div>
-            ${metaLine ? `<div class="photo-meta">${metaLine}</div>` : ''}
-            ${tags.length ? `<div class="photo-tags">${tags.map(tag => `<span class="photo-tag">${tag}</span>`).join('')}</div>` : ''}
+      grid.innerHTML = sortedAlbumNames.map(albumName => `
+        <div class="album-section">
+          <h2>${albumName}</h2>
+          <div class="photo-grid">
+            ${albums[albumName].map(photo => renderPhotoCard(photo)).join('')}
           </div>
         </div>
-      `;
-      }).join('');
+      `).join('');
     }
 
     function setupFilters() {

@@ -1,0 +1,22 @@
+{
+  "name": "photo-manager",
+  "version": "1.0.0",
+  "description": "Efficient photo album manager with EXIF extraction and metadata generation",
+  "type": "module",
+  "scripts": {
+    "vite": "vite",
+    "dev": "tauri dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/api": "^1.5.0",
+    "@tauri-apps/cli": "^1.5.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^7.3.1"
+  }
+}
