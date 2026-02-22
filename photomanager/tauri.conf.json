@@ -3,7 +3,7 @@
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run vite",
     "devPath": "http://localhost:5173",
-    "distDir": "../dist"
+    "distDir": "dist"
   },
   "package": {
     "productName": "Photo Manager",
