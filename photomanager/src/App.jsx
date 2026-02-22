@@ -247,6 +247,7 @@ function App() {
                 onChange={(e) => setAlbumName(e.target.value)}
                 className="input"
               />
+              <small>Name will be normalized (lowercase, hyphens): "Tokyo 2024" → "tokyo-2024"</small>
             </div>
 
             <div className="form-group">
@@ -263,7 +264,7 @@ function App() {
                   Browse
                 </button>
               </div>
-              <small>This should be: <code>website_src/assets/images/albums</code></small>
+              <small>Select: <code>website_src/assets/images/albums</code></small>
             </div>
 
             {message && <p className="message">{message}</p>}
@@ -285,15 +286,28 @@ function App() {
 
         {step === 'complete' && (
           <div className="step-container success">
-            <h2>✅ Complete!</h2>
+            <h2>✅ Album Created Successfully!</h2>
             {message && <p className="message success-message">{message}</p>}
             
             <div className="next-steps">
-              <h3>Next Steps:</h3>
+              <h3>📋 Next Steps:</h3>
               <ol>
-                <li>Run <code>npm run albums</code> in website_src/</li>
-                <li>Your photos are now organized with metadata!</li>
+                <li>
+                  <strong>Navigate to website_src folder:</strong><br/>
+                  <code>cd /path/to/website_src</code>
+                </li>
+                <li>
+                  <strong>Regenerate albums.json:</strong><br/>
+                  <code>npm run albums</code>
+                </li>
+                <li>
+                  <strong>Your photos are now live!</strong> Check your website's albums page.
+                </li>
               </ol>
+              <p style={{marginTop: '1rem', fontSize: '0.9rem', color: '#888'}}>
+                ℹ️ The app updates <code>albums.meta.json</code> which contains photo metadata. 
+                Running <code>npm run albums</code> generates <code>albums.json</code> for your website.
+              </p>
             </div>
 
             <button 

@@ -132,8 +132,14 @@ fn create_album(
 ) -> Result<String, String> {
   let output_path = Path::new(&output_base);
 
+  // Normalize album name: lowercase, replace spaces with hyphens
+  let normalized_album_name = album_name
+    .to_lowercase()
+    .replace(' ', "-")
+    .replace(|c: char| !c.is_alphanumeric() && c != '-', "-");
+
   // Create album folder
-  let album_folder = output_path.join(&album_name);
+  let album_folder = output_path.join(&normalized_album_name);
   fs::create_dir_all(&album_folder).map_err(|e| e.to_string())?;
 
   // Copy photos to album folder
@@ -146,27 +152,42 @@ fn create_album(
     }
   }
 
-  // Generate metadata JSON
-  let mut metadata = serde_json::json!({});
+  // Path to metadata file: assets/data/albums.meta.json
+  // Assuming output_base is assets/images/albums, we go up 2 levels to assets, then data/
+  let meta_file = output_path
+    .parent()
+    .and_then(|p| p.parent())
+    .map(|p| p.join("data").join("albums.meta.json"))
+    .ok_or("Invalid output path structure")?;
 
+  // Read existing metadata or create empty object
+  let mut metadata: serde_json::Value = if meta_file.exists() {
+    let content = fs::read_to_string(&meta_file).map_err(|e| e.to_string())?;
+    serde_json::from_str(&content).unwrap_or(serde_json::json!({}))
+  } else {
+    serde_json::json!({})
+  };
+
+  // Add new photos to metadata
   for photo in &photos {
-    let key = format!("{}/{}", album_name, photo.filename);
+    let key = format!("{}/{}", normalized_album_name, photo.filename);
     metadata[key] = serde_json::json!({
       "title": photo.title,
       "tags": photo.tags,
       "location": photo.location,
       "date": photo.date,
-      "album": album_name
+      "album": normalized_album_name
     });
   }
 
-  // Save JSON to albums.meta.json
-  let meta_file = output_path.parent().unwrap_or(output_path).join("albums.meta.json");
+  // Save updated metadata
+  fs::create_dir_all(meta_file.parent().unwrap()).map_err(|e| e.to_string())?;
   let json_string = serde_json::to_string_pretty(&metadata).map_err(|e| e.to_string())?;
   fs::write(&meta_file, json_string).map_err(|e| e.to_string())?;
 
   Ok(format!(
-    "Album created successfully!\nPhotos: {}\nMetadata saved to: {}",
+    "Album created successfully!\nAlbum: {}\nPhotos: {}\nMetadata saved to: {}",
+    normalized_album_name,
     photos.len(),
     meta_file.display()
   ))
