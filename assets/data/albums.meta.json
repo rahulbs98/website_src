@@ -1,74 +1,158 @@
 {
+  "stockholm-2024/Instagram_upload-3.jpg": {
+    "title": "Skyline-Sunset(1)",
+    "tags": [
+      "Sunset",
+      "Skyline",
+      "Stockholm",
+      "Sweden",
+      "River",
+      "Architecture"
+    ],
+    "location": "Stockholm, Sweden",
+    "date": "02/11/2024",
+    "album": "stockholm-2024"
+  },
+  "stockholm-2024/Instagram_upload-2.jpg": {
+    "title": "Skyline-Sunset(2)",
+    "tags": [
+      "Sunset",
+      "Skyline",
+      "Stockholm",
+      "Sweden",
+      "River",
+      "Architecture"
+    ],
+    "location": "Stockholm, Sweden",
+    "date": "02/11/2024",
+    "album": "stockholm-2024"
+  },
+  "stockholm-2024/Instagram_upload-1.jpg": {
+    "title": "Skyline-Sunset(3)",
+    "tags": [
+      "Sunset",
+      "Skyline",
+      "Stockholm",
+      "Sweden",
+      "River",
+      "Architecture"
+    ],
+    "location": "Stockholm, Sweden",
+    "date": "02/11/2024",
+    "album": "stockholm-2024"
+  },
+  "stockholm-2024/Instagram_upload-5.jpg": {
+    "title": "Skyline-Sunset(4)",
+    "tags": [
+      "Sunset",
+      "Skyline",
+      "Stockholm",
+      "Sweden",
+      "River",
+      "Architecture"
+    ],
+    "location": "Stockholm, Sweden",
+    "date": "02/11/2024",
+    "album": "stockholm-2024"
+  },
+  "stockholm-2024/Instagram_upload-4.jpg": {
+    "title": "Skyline-Sunset(5)",
+    "tags": [
+      "Sunset",
+      "Skyline",
+      "Stockholm",
+      "Sweden",
+      "River",
+      "Architecture"
+    ],
+    "location": "Stockholm, Sweden",
+    "date": "02/11/2024",
+    "album": "stockholm-2024"
+  },
+  "stockholm-2024/Instagram_upload-6.jpg": {
+    "title": "Skyline-Sunset(6)",
+    "tags": [
+      "Sunset",
+      "Skyline",
+      "Stockholm",
+      "Sweden",
+      "River",
+      "Architecture"
+    ],
+    "location": "Stockholm, Sweden",
+    "date": "02/11/2024",
+    "album": "stockholm-2024"
+  },
   "paris-2024/Instagram_upload-3.jpg": {
     "title": "French Parliament",
     "tags": [
       "Paris",
       "France",
-      "Architecture",
+      "Architecure",
       "Night"
     ],
     "location": "Paris, France",
-    "date": "",
+    "date": "27/10/24",
     "album": "paris-2024"
   },
   "paris-2024/Instagram_upload-2.jpg": {
-    "title": "Louvre - Night View (1)",
+    "title": "Louvre (Night) (1)",
     "tags": [
       "Paris",
       "France",
-      "Architecture",
+      "Architecure",
       "Night"
     ],
     "location": "Paris, France",
-    "date": "",
+    "date": "27/10/24",
     "album": "paris-2024"
   },
   "paris-2024/Instagram_upload-1.jpg": {
-    "title": "Louvre - Night View (2)",
+    "title": "Louvre (Night) (2)",
     "tags": [
       "Paris",
       "France",
-      "Architecture",
+      "Architecure",
       "Night"
     ],
     "location": "Paris, France",
-    "date": "",
+    "date": "27/10/24",
     "album": "paris-2024"
   },
   "paris-2024/Instagram_upload-5.jpg": {
-    "title": "Eiffel Tower - NIght View",
+    "title": "Eiffel Tower (Night) (1)",
     "tags": [
       "Paris",
       "France",
-      "Architecture",
+      "Architecure",
       "Night"
     ],
     "location": "Paris, France",
-    "date": "",
+    "date": "28/10/24",
     "album": "paris-2024"
   },
   "paris-2024/Instagram_upload-4.jpg": {
-    "title": "Eiffel Tower - Sunset",
+    "title": "Eiffel Tower (Sunset)",
     "tags": [
       "Paris",
       "France",
-      "Architecture",
+      "Architecure",
       "Sunset"
     ],
     "location": "Paris, France",
-    "date": "",
+    "date": "28/10/24",
     "album": "paris-2024"
   },
   "paris-2024/Instagram_upload-6.jpg": {
-    "title": "Eiffel Tower - City Night View",
+    "title": "Eiffel Tower (Night) (2)",
     "tags": [
       "Paris",
       "France",
-      "Architecture",
+      "Architecure",
       "Night"
     ],
     "location": "Paris, France",
-    "date": "",
+    "date": "28/10/24",
     "album": "paris-2024"
   }
 }

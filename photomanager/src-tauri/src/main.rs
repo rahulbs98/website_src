@@ -8,6 +8,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 use walkdir::WalkDir;
 use std::io::BufReader;
+use image::{imageops::FilterType, GenericImageView};
+use rayon::prelude::*;
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 struct PhotoMetadata {
@@ -78,6 +80,44 @@ fn extract_exif_data(file_path: &str) -> ExifData {
   exif_data
 }
 
+// Optimize image: resize and compress for web
+fn optimize_image(source: &Path, dest: &Path, max_dimension: u32, quality: u8) -> Result<(), String> {
+  // Load the image
+  let img = image::open(source).map_err(|e| format!("Failed to open image: {}", e))?;
+  
+  let (width, height) = img.dimensions();
+  
+  // Resize if image is larger than max_dimension
+  let resized = if width > max_dimension || height > max_dimension {
+    let scale = if width > height {
+      max_dimension as f32 / width as f32
+    } else {
+      max_dimension as f32 / height as f32
+    };
+    
+    let new_width = (width as f32 * scale) as u32;
+    let new_height = (height as f32 * scale) as u32;
+    
+    println!("Resizing {}x{} -> {}x{}", width, height, new_width, new_height);
+    img.resize(new_width, new_height, FilterType::Lanczos3)
+  } else {
+    img
+  };
+  
+  // Save as JPEG with specified quality
+  let output_file = fs::File::create(dest).map_err(|e| format!("Failed to create output file: {}", e))?;
+  let mut encoder = image::codecs::jpeg::JpegEncoder::new_with_quality(output_file, quality);
+  
+  encoder.encode(
+    resized.as_bytes(),
+    resized.width(),
+    resized.height(),
+    resized.color(),
+  ).map_err(|e| format!("Failed to encode JPEG: {}", e))?;
+  
+  Ok(())
+}
+
 // Scan folder for images
 #[tauri::command]
 fn scan_photos(folder_path: String) -> Result<Vec<PhotoInfo>, String> {
@@ -142,14 +182,28 @@ fn create_album(
   let album_folder = output_path.join(&normalized_album_name);
   fs::create_dir_all(&album_folder).map_err(|e| e.to_string())?;
 
-  // Copy photos to album folder
-  for photo in &photos {
-    let source = Path::new(&photo.path);
-    let dest = album_folder.join(&photo.filename);
+  // Optimize and copy photos to album folder (in parallel)
+  // Max dimension: 2000px, JPEG quality: 85
+  let results: Vec<Result<(), String>> = photos
+    .par_iter()
+    .map(|photo| {
+      let source = Path::new(&photo.path);
+      let dest = album_folder.join(&photo.filename);
 
-    if source.exists() {
-      fs::copy(source, &dest).map_err(|e| e.to_string())?;
-    }
+      if source.exists() {
+        optimize_image(source, &dest, 2000, 85)
+          .map_err(|e| format!("Failed to optimize {}: {}", photo.filename, e))?;
+        println!("Optimized: {}", photo.filename);
+        Ok(())
+      } else {
+        Ok(())
+      }
+    })
+    .collect();
+
+  // Check for any errors during parallel processing
+  for result in results {
+    result?;
   }
 
   // Path to metadata file: assets/data/albums.meta.json

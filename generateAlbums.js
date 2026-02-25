@@ -76,6 +76,8 @@ function writeJson(data) {
 }
 
 function run() {
+  // TODO: This regenerates albums.json from scratch each time.
+  // Works for now, but could be optimized to incrementally update if performance becomes an issue.
   const images = getImagesRecursive(IMAGES_DIR);
   writeJson(images);
   console.log(`Generated ${OUTPUT_PATH} with ${images.length} items.`);

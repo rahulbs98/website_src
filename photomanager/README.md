@@ -6,6 +6,7 @@ A **Rust-based Tauri desktop app** for efficiently organizing photos into albums
 
 - ✅ **Tauri + Rust Backend**: Lightning-fast file operations
 - ✅ **EXIF Auto-Extraction**: Automatically extracts date and GPS location from photos
+- ✅ **Image Optimization**: Automatically resizes and compresses images for web (max 2000px, JPEG quality 85%)
 - ✅ **Image Preview**: View photos while editing metadata
 - ✅ **Photo Organization**: Create album folders and organize photos
 - ✅ **Metadata Generation**: Auto-generates `albums.meta.json` with all photo metadata
@@ -77,7 +78,7 @@ npm run dev
 When you create an album, the app:
 
 1. **Creates folder**: `assets/images/albums/{normalized-album-name}/`
-2. **Copies photos**: All photos go into the album folder
+2. **Optimizes & copies photos**: Automatically resizes (max 2000px) and compresses (JPEG quality 85%) all images for web
 3. **Updates metadata**: Appends to existing `assets/data/albums.meta.json` (doesn't overwrite!)
 
 After running `npm run albums` in `website_src/`:
